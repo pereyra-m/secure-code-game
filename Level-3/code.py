@@ -52,7 +52,7 @@ class TaxPayer:
         if not tax_data_path.startswith(base_dir):
             return base_dir 
 
-        with open(path, 'rb') as form:
+        with open(tax_data_path, 'rb') as form:
             tax_data = bytearray(form.read())
 
         # assume that taxa data is returned on screen after this
