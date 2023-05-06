@@ -5,13 +5,16 @@ import hashlib
 import os
 import bcrypt
 
+from argon2 import PasswordHasher
+
+"""
 class Random_generator:
 
     # generates a random token
     def generate_token(self, length=8, alphabet=(
     '0123456789'
     'abcdefghijklmnopqrstuvwxyz'
-    'ABCDEFGHIJKLMNOPQRSTUVWXYZ' 
+    'ABCDEFGHIJKLMNOPQRSTUVWXYZ'
     )):
         return ''.join(random.choice(alphabet) for i in range(length))
 
@@ -36,14 +39,22 @@ class SHA256_hasher:
         return bcrypt.checkpw(password, password_hash)
 
 class MD5_hasher:
-    
+
     # same as above but using a different algorithm to hash which is MD5
     def password_hash(self, password):
         return hashlib.md5(password.encode()).hexdigest()
 
     def password_verification(self, password, password_hash):
         password = self.password_hash(password)
-        return secrets.compare_digest(password.encode(), password_hash.encode())    
+        return secrets.compare_digest(password.encode(), password_hash.encode())     """
+
+def get_initial_hash(password: str):
+    ph = PasswordHasher()
+    return ph.hash(password) # GOOD
+
+def check_password(password: str, known_hash):
+    ph = PasswordHasher()
+    return ph.verify(known_hash, password) # GOOD
 
 # a collection of sensitive secrets necessary for the software to operate
 PRIVATE_KEY = os.environ.get('PRIVATE_KEY')
